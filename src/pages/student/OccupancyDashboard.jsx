@@ -234,22 +234,24 @@ export default function OccupancyDashboard() {
       cap:     ZONE_CAPACITY,
     }));
 
-    // ── Peak hour (avg across days) ──
-    const hourDayMap = {};
+    // ── Peak hour (based on TOTAL occupancy) ──
+    const hourTotals = {};
+
     activeData.forEach(({ timestamp, occupancy }) => {
-      const h   = timestamp.getHours();
-      const day = timestamp.toDateString();
-      if (!hourDayMap[h])      hourDayMap[h]      = {};
-      if (!hourDayMap[h][day]) hourDayMap[h][day] = [];
-      hourDayMap[h][day].push(occupancy);
+    const h = timestamp.getHours();
+    hourTotals[h] = (hourTotals[h] || 0) + occupancy;
     });
 
-    const avgHourMap = Object.entries(hourDayMap).map(([hour, days]) => {
-      const dailyAvgs = Object.values(days).map((vals) => vals.reduce((a, b) => a + b, 0) / vals.length);
-      return { hour: Number(hour), avg: dailyAvgs.reduce((a, b) => a + b, 0) / dailyAvgs.length };
-    });
-    const peakObj  = avgHourMap.sort((a, b) => b.avg - a.avg)[0];
-    const peakHour = peakObj ? `${peakObj.hour}:00 – ${peakObj.hour + 1}:00` : "-";
+    const peakEntry = Object.entries(hourTotals)
+    .map(([hour, total]) => ({
+        hour: Number(hour),
+        total
+    }))
+    .sort((a, b) => b.total - a.total)[0];
+
+    const peakHour = peakEntry
+    ? `${peakEntry.hour}:00 – ${peakEntry.hour + 1}:00`
+    : "-";
 
     // ── Overall stats ──
     const totalStudents  = activeData.reduce((s, d) => s + d.occupancy, 0);
@@ -282,7 +284,7 @@ export default function OccupancyDashboard() {
       {/* ── HEADER ─────────────────────────────────────────────── */}
       <div style={styles.header}>
         <div>
-          <h1 style={styles.heading}>📚 Library Occupancy Dashboard</h1>
+          <h1 style={styles.heading}>Library Occupancy Dashboard</h1>
           <p style={styles.subHeading}>Real-time zone monitoring &amp; analytics</p>
         </div>
         {showLast30Min && (

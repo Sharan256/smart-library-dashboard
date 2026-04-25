@@ -2,13 +2,14 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import StudentPage from './pages/student/StudentPage';
 import ZonePage from './pages/student/ZonePage';
-import EnvironmentPage from './pages/student/EnvironmentPage';
-import OccupancyDashboard from './pages/student/OccupancyDashboard';
 import StudentInsightsPage from './pages/student/StudentInsightsPage';
 import AssistantPage from './pages/assistant/AssistantPage';
 import AssistantInsightsPage from './pages/assistant/AssistantInsightsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import Chatbot from './components/Chatbot';
+import OccupancyDashboard from './pages/student/OccupancyDashboard';
+import EnvironmentPage from './pages/student/EnvironmentPage';
+
 
 export default function App() {
   return (
@@ -40,22 +41,6 @@ export default function App() {
           }
         />
         <Route
-          path="/student/environment"
-          element={
-            <ProtectedRoute requiredRole="student">
-              <EnvironmentPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/student/occupancy"
-          element={
-            <ProtectedRoute requiredRole="student">
-              <OccupancyDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="/assistant"
           element={
             <ProtectedRoute requiredRole="assistant">
@@ -71,6 +56,25 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/student/occupancy"
+          element={
+            <ProtectedRoute requiredRole="student">
+              <OccupancyDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/student/environment"
+          element={
+            <ProtectedRoute requiredRole="student">
+              <EnvironmentPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

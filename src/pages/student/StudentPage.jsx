@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { loadLibraryData } from '../../utils/libraryData';
+import Chatbot from "../../components/Chatbot";
 import {
   ResponsiveContainer,
   Line,
@@ -411,6 +412,7 @@ export default function StudentPage() {
       <div className="card" style={{ display: 'flex', justifyContent: 'center' }}>
         <button onClick={handleLogout} className="danger-btn">Logout</button>
       </div>
+      <Chatbot />
     </div>
   );
 }
