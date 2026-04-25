@@ -163,6 +163,12 @@ export default function StudentInsightsPage() {
         <Link to="/student" className="secondary-btn">
           Back to Student Dashboard
         </Link>
+        <Link to="/student/environment" className="secondary-btn">
+          Environment
+        </Link>
+        <Link to="/student/occupancy" className="secondary-btn">
+          Occupancy Analytics
+        </Link>
       </div>
 
       <div className="card" style={{ marginBottom: '20px' }}>
