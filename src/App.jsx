@@ -2,6 +2,8 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import StudentPage from './pages/student/StudentPage';
 import ZonePage from './pages/student/ZonePage';
+import EnvironmentPage from './pages/student/EnvironmentPage';
+import OccupancyDashboard from './pages/student/OccupancyDashboard';
 import StudentInsightsPage from './pages/student/StudentInsightsPage';
 import AssistantPage from './pages/assistant/AssistantPage';
 import AssistantInsightsPage from './pages/assistant/AssistantInsightsPage';
@@ -34,6 +36,22 @@ export default function App() {
           element={
             <ProtectedRoute requiredRole="student">
               <StudentInsightsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/environment"
+          element={
+            <ProtectedRoute requiredRole="student">
+              <EnvironmentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/occupancy"
+          element={
+            <ProtectedRoute requiredRole="student">
+              <OccupancyDashboard />
             </ProtectedRoute>
           }
         />
